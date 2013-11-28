@@ -1,0 +1,20 @@
+1. SELECT kdnr, kdname, strasse, plz FROM kunde WHERE vertreternr = ( SELECT vertreternr FROM vertreter WHERE plz = ( SELECT plz FROM ort WHERE ort ='München' ));
+2. SELECT auftragsnr, kdnr FROM auftrag WHERE auftragsdat between '2003-07-20' and '2003-07-29';
+3. SELECT artikelnr, bezeichnung, preis, mwstnr FROM artikel WHERE artikelnr NOT between '1003' and '1008';
+4. SELECT * FROM kunde where kdnr IN('20003','20004','20007');
+5. SELECT * FROM kunde WHERE strasse NOT LIKE 'e%' AND  strasse NOT LIKE 'i%' AND strasse NOT LIKE'r%';
+6. SELECT * FROM artikel WHERE bezeichnung LIKE 'd%' AND bezeichnung LIKE 'm%';
+7. SELECT * FROM vertreter WHERE plz IN ( SELECT plz FROM ort WHERE ort LIKE 'Duisburg' )  ;
+8. SELECT * FROM artikel WHERE artikelnr IN ( SELECT auftragsnr FROM position );
+9. SELECT * FROM artikel WHERE artikelnr NOT IN ( SELECT auftragsnr FROM position );
+10. SELECT artikelnr, bezeichnung FROM artikel WHERE artikelnr IN ( SELECT artikelnr FROM position WHERE auftragsnr = ( SELECT auftragsnr FROM auftrag WHERE auftragsdat = '2003-07-19' ))
+11. SELECT * FROM kunde WHERE kdnr  IN ( SELECT kdnr FROM  auftrag WHERE auftragsdat IN('2003-07-20', '2003-07-30'));
+12. SELECT * FROM kunde WHERE kdnr NOT IN ( SELECT kdnr FROM  auftrag );
+13. SELECT * FROM kunde WHERE kdnr NOT IN ( SELECT kdnr FROM auftrag WHERE auftragsdat != '2003-07-29' );
+14. SELECT SUM(menge) AS Gesamtbestellmenge FROM ( SELECT menge FROM position ) AS Gesamtbestellmenge;
+15. SELECT SUM(menge) AS Gesamtbestellmenge_der_Pils_Biere FROM ( SELECT menge FROM position WHERE artikelnr IN ( SELECT artikelnr FROM artikel WHERE bezeichnung LIKE '%Pils%' ) AND auftragsnr BETWEEN '1' AND '9') AS t;
+16. SELECT AVG(menge) AS Durchschnittliche_Bestellmenge_der_Quellwasser FROM ( SELECT menge FROM position WHERE artikelnr IN ( SELECT artikelnr FROM artikel WHERE bezeichnung LIKE '%quelle%')) AS t;
+17. SELECT COUNT(kdname) AS 'Kunde mit Getränke im Namen' FROM ( SELECT kdname FROM kunde WHERE kdname LIKE '%getränk%' Or kdname LIKE '%getränke%' ) AS t ;
+18. SELECT SUM(menge) AS 'Bestellte Getränke' FROM ( SELECT menge FROM position WHERE auftragsnr IN ( SELECT auftragsnr FROM auftrag )) AS t; 
+19. SELECT COUNT(bezeichnung) AS 'Anzahl der Getränke, die nich nicht bestellt wurden' FROM ( SELECT bezeichnung FROM artikel WHERE artikelnr NOT IN ( SELECT artikelnr FROM position WHERE auftragsnr IN ( SELECT auftragsnr FROM auftrag ))) AS t; 
+20. SELECT MIN(plz) AS 'Kleinste Postleitzahl' FROM ort WHERE ort LIKE 'h%';
